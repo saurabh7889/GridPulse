@@ -3938,6 +3938,93 @@ tbody tr.critical-row {
 .legend-west { background: #5bc8b4; }
 .legend-east { background: #c8cdd1; }
 
+/* ---- Fault Mode Toggle Button ---- */
+.fault-toggle {
+  border-color: #e84040 !important;
+  color: #c0392b !important;
+  gap: 6px;
+  font-weight: 700 !important;
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+.fault-toggle svg { stroke: #c0392b !important; }
+.fault-toggle:hover { background: #fff5f5 !important; }
+
+.fault-toggle.active {
+  background: #c0392b !important;
+  color: #fff !important;
+  border-color: #c0392b !important;
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.22), 0 0 12px rgba(192,57,43,0.3);
+  animation: faultPulse 1.6s ease-in-out infinite;
+}
+.fault-toggle.active svg { stroke: #fff !important; }
+
+@keyframes faultPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(192,57,43,0.22), 0 0 12px rgba(192,57,43,0.3); }
+  50%       { box-shadow: 0 0 0 6px rgba(192,57,43,0.10), 0 0 22px rgba(192,57,43,0.5); }
+}
+
+/* ---- Fault Banner ---- */
+.fault-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #fff1f1;
+  border: 1.5px solid #e84040;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #891b1b;
+  animation: faultSlideIn 0.35s ease;
+}
+.fault-banner[hidden] { display: none !important; }
+.fault-banner svg { flex-shrink: 0; fill: #e84040; stroke: none; }
+.fault-banner span { flex: 1; }
+.fault-badge {
+  background: #e84040;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+@keyframes faultSlideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Fault Mode Chart Overrides ---- */
+.chart-panel.fault-mode .total-line  { stroke: #e84040; stroke-width: 2.6; }
+.chart-panel.fault-mode .north-line  { stroke: #f0964d; }
+.chart-panel.fault-mode .west-line   { stroke: #e84040; stroke-dasharray: 5 3; }
+.chart-panel.fault-mode .east-line   { stroke: #ffb3b3; }
+.chart-panel.fault-mode .total-area  { fill: url(#faultFill); }
+.chart-panel.fault-mode #hoverDot    { fill: #e84040; }
+.chart-panel.fault-mode .grid-lines  { stroke: #fbe8e8; }
+
+/* ---- Faulty Table Rows ---- */
+.fault-row td { color: #c0392b !important; }
+.fault-row { background: #fff8f8 !important; }
+.fault-row td:first-child::before {
+  content: "⚠ ";
+  color: #e84040;
+  font-size: 12px;
+}
+.fault-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #fee2e2;
+  color: #c0392b;
+  border: 1px solid #fca5a5;
+}
+
+
 .reports-table-panel {
   margin-top: 14px;
   padding: 0 16px 8px;

@@ -683,6 +683,10 @@
                     <select id="reportsLocationSelect" aria-label="Location"><option>All Locations</option><option>Lakeside Region</option><option>North Substation</option><option>West Feeder</option></select>
                     <button id="dateRange" class="control-button"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span id="dateRangeText">May 14, 2024 – May 20, 2024</span> <span>⌄</span></button>
                     <select id="metricSelect" aria-label="Performance metric"><option value="Load (MW)">Load (MW)</option><option value="Voltage (kV)">Voltage (kV)</option><option value="Current (A)">Current (A)</option></select>
+                    <button id="faultModeBtn" class="control-button fault-toggle" aria-pressed="false" title="Toggle Fault Mode">
+                      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M13 2L3 14h9l-1 8 10-12h-9z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span>Fault Mode</span>
+                    </button>
                   </div>
                 </div>
                 <div class="chart-wrap">
@@ -704,6 +708,12 @@
                 </div>
                 <div class="x-labels"><span>May 14</span><span>May 15</span><span>May 16</span><span>May 17</span><span>May 18</span><span>May 19</span><span>May 20</span></div>
                 <div class="chart-legend"><span><i class="legend-total"></i>Total Load</span><span><i class="legend-north"></i>North Feeder</span><span><i class="legend-west"></i>West Feeder</span><span><i class="legend-east"></i>East Feeder</span></div>
+                <!-- Fault Banner -->
+                <div class="fault-banner" id="faultBanner" hidden>
+                  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <span><strong>FAULT DETECTED:</strong> Abnormal load spike on TX-04 Lakeside — Voltage deviation &gt;18%. Threshold exceeded at 08:42 AM.</span>
+                  <span class="fault-badge">3 Active Faults</span>
+                </div>
               </section>
 
               <section class="reports-table-panel panel">
@@ -1207,6 +1217,132 @@
       // 4. Work order dialog scheduled date input
       const workOrderDate = document.querySelector('#workOrderForm input[name="date"]');
       if (workOrderDate) workOrderDate.value = tomorrowISO;
+
+      /* =====================================================
+         CHART: Animated variable graph (ups & downs)
+         ===================================================== */
+      const svg = document.getElementById('performanceChart');
+
+      // Inject fault gradient defs
+      const defs = svg.querySelector('defs');
+      defs.innerHTML += `<linearGradient id="faultFill" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#e84040" stop-opacity=".18"/>
+        <stop offset="1" stop-color="#e84040" stop-opacity="0"/>
+      </linearGradient>`;
+
+      // Normal data points (y-values in SVG coords, 0=top 165=bottom)
+      const normalPoints = [98,104,115,114,120,103,89,96,78,76,82,70,67,51,58,49,55,40,45,29,24];
+      const normalNorth  = [132,136,133,145,135,139,128,137,118,112,120,105,100,92,101,105,92,79,85,74,65];
+      const normalWest   = [155,151,157,149,152,145,151,144,139,144,137,142,136,142,138,130,134,119,122,108,103];
+      const normalEast   = [147,150,142,149,143,151,144,147,140,146,141,145,139,144,140,144,138,141,134,138,130];
+
+      // Fault data — spikes, crashes, erratic
+      const faultPoints  = [98,88,130,60,145,72,30,120,148,40,160,25,145,10,155,18,142,8,150,5,160];
+      const faultNorth   = [132,120,155,80,160,85,45,140,158,55,162,35,155,18,160,22,152,10,158,8,162];
+      const faultWest    = [155,148,162,100,165,108,60,155,163,68,164,50,160,28,163,30,158,15,162,10,165];
+      const faultEast    = [147,140,158,92,163,98,52,150,161,60,163,42,157,22,161,25,155,12,160,8,163];
+
+      const xStep = 820 / (normalPoints.length - 1);
+
+      function buildPath(pts) {
+        return pts.map((y, i) => `${i === 0 ? 'M' : 'L'}${Math.round(i * xStep)} ${y}`).join(' ');
+      }
+      function buildArea(pts) {
+        return buildPath(pts) + `V165H0Z`;
+      }
+
+      // Add subtle random jitter for "live" feel
+      function jitter(pts, amount) {
+        return pts.map(y => Math.max(4, Math.min(162, y + (Math.random() - 0.5) * amount)));
+      }
+
+      let isFaultMode = false;
+      let animTimer = null;
+
+      function renderChart(pts, north, west, east, animated) {
+        const totalLine = document.getElementById('totalLine');
+        const totalArea = document.getElementById('totalArea');
+        const northLine = document.getElementById('northLine');
+        const westLine  = document.getElementById('westLine');
+        const eastLine  = document.getElementById('eastLine');
+        const j = animated ? jitter(pts, isFaultMode ? 18 : 6) : pts;
+        if (totalLine) totalLine.setAttribute('d', buildPath(j));
+        if (totalArea) totalArea.setAttribute('d', buildArea(j));
+        if (northLine) northLine.setAttribute('d', buildPath(animated ? jitter(north, isFaultMode ? 14 : 4) : north));
+        if (westLine)  westLine.setAttribute('d',  buildPath(animated ? jitter(west,  isFaultMode ? 14 : 4) : west));
+        if (eastLine)  eastLine.setAttribute('d',  buildPath(animated ? jitter(east,  isFaultMode ? 12 : 4) : east));
+      }
+
+      function startAnimation() {
+        if (animTimer) clearInterval(animTimer);
+        animTimer = setInterval(() => {
+          const pts   = isFaultMode ? faultPoints : normalPoints;
+          const north = isFaultMode ? faultNorth  : normalNorth;
+          const west  = isFaultMode ? faultWest   : normalWest;
+          const east  = isFaultMode ? faultEast   : normalEast;
+          renderChart(pts, north, west, east, true);
+        }, 1800);
+      }
+
+      // Draw initial normal chart
+      renderChart(normalPoints, normalNorth, normalWest, normalEast, false);
+      startAnimation();
+
+      /* =====================================================
+         FAULT MODE TOGGLE
+         ===================================================== */
+      const faultBtn   = document.getElementById('faultModeBtn');
+      const faultBanner = document.getElementById('faultBanner');
+      const chartPanel = document.querySelector('.chart-panel');
+
+      // Store original report rows HTML
+      const reportsBody = document.getElementById('reportsBody');
+      const originalRows = reportsBody ? reportsBody.innerHTML : '';
+
+      const faultyRowsHTML = `
+        <tr class="fault-row" data-report="TX-04 Voltage Spike Report" data-type="ALERT" data-range="Today" data-generated="Today">
+          <td>TX-04 Voltage Spike Report</td><td>ALERT</td><td>Today</td><td>Today</td>
+          <td><span class="fault-status-pill">⚠ Fault</span></td>
+          <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
+        </tr>
+        <tr class="fault-row" data-report="North Feeder Overload" data-type="ALERT" data-range="Today" data-generated="Today">
+          <td>North Feeder Overload</td><td>ALERT</td><td>Today</td><td>Today</td>
+          <td><span class="fault-status-pill">⚠ Critical</span></td>
+          <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
+        </tr>
+        <tr class="fault-row" data-report="Transformer TX-07 Thermal Trip" data-type="ALERT" data-range="Today" data-generated="Today">
+          <td>Transformer TX-07 Thermal Trip</td><td>ALERT</td><td>Today</td><td>Today</td>
+          <td><span class="fault-status-pill">⚠ Fault</span></td>
+          <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
+        </tr>`;
+
+      if (faultBtn) {
+        faultBtn.addEventListener('click', () => {
+          isFaultMode = !isFaultMode;
+          faultBtn.classList.toggle('active', isFaultMode);
+          faultBtn.setAttribute('aria-pressed', String(isFaultMode));
+          faultBtn.querySelector('span').textContent = isFaultMode ? 'Normal Mode' : 'Fault Mode';
+
+          // Show/hide banner
+          if (faultBanner) faultBanner.hidden = !isFaultMode;
+
+          // Toggle chart panel class
+          if (chartPanel) chartPanel.classList.toggle('fault-mode', isFaultMode);
+
+          // Switch table rows
+          if (reportsBody) reportsBody.innerHTML = isFaultMode ? faultyRowsHTML : originalRows;
+
+          // Immediately redraw chart to new mode
+          renderChart(
+            isFaultMode ? faultPoints : normalPoints,
+            isFaultMode ? faultNorth  : normalNorth,
+            isFaultMode ? faultWest   : normalWest,
+            isFaultMode ? faultEast   : normalEast,
+            false
+          );
+          startAnimation();
+        });
+      }
     });
   </script>
   <script src="dash.js"></script>
