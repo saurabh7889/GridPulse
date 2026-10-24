@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#dce7e9" />
+  <title>GridPulse — See the Signals. Protect the Grid.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;550;600;650;700;750;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Global Navigation Header -->
+  <header class="navbar" id="mainNavbar">
+    <a class="brand" href="#home" aria-label="GridPulse home">
+      <svg class="brand-bolt" viewBox="0 0 36 48" aria-hidden="true">
+        <path d="M21.5 1 3 26h12l-2 21L33 19H20.5L21.5 1Z" fill="currentColor" />
+      </svg>
+      <span>GRID<span>PULSE</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a class="active" href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#how">How It Works</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact">Contact</a>
+      <a href="Dashboard/dashboard.html" style="color: #078c7b; font-weight: 700;">Live Dashboard ↗</a>
+    </nav>
+    <a class="login-button" id="loginButton" href="Dashboard/dashboard.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="7.5" r="3.5" />
+        <path d="M4.5 21v-2.1a7.5 7.5 0 0 1 15 0V21" />
+      </svg>
+      <span>Dashboard</span>
+    </a>
+    <button class="menu-button" id="menuButton" aria-label="Open navigation" aria-expanded="false" type="button">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Section 01: Hero -->
+  <section class="hero-shell" id="home">
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="photo-wash" aria-hidden="true"></div>
+    <div class="frame" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="oversized-word" aria-hidden="true">GRIDPULSE</div>
+      <div class="hero-copy">
+        <h1>See the Signals.<br><span>Protect</span> the Grid.</h1>
+        <p>Turn existing SCADA telemetry into early warnings<br class="desktop-break"> and coordinated response.</p>
+        <a class="primary-cta" href="#about">Explore GridPulse <span class="arrow">→</span></a>
+        <div class="micro-line"><span class="line"></span><span>Telemetry</span><i>•</i><span>Predictive
+            signals</span><i>•</i><span>Coordinated response</span></div>
+      </div>
+
+      <aside class="floating-ui" aria-label="GridPulse demo status">
+        <div class="metric-row">
+          <article class="glass-card chi-card">
+            <div class="round-icon pulse-icon">
+              <svg viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M4 26h10l5-13 7 25 6-18 4 6h8" />
+              </svg>
+            </div>
+            <div class="chi-copy"><span class="eyebrow">CHI</span><strong>82</strong><small>Demo status</small></div>
+          </article>
+          <article class="glass-card risk-card">
+            <div class="round-icon shield-icon">
+              <svg viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M24 5 39 11v11c0 10-6.5 17-15 21C15.5 39 9 32 9 22V11L24 5Z" />
+              </svg>
+            </div>
+            <div><strong class="risk-title">Risk signals</strong><small>Early warning</small></div>
+          </article>
+        </div>
+        <article class="glass-card operator-card">
+          <div class="avatars" aria-label="Grid operations team">
+            <span class="avatar avatar-one">O</span><span class="avatar avatar-two">A</span><span
+              class="avatar avatar-three">E</span><span class="avatar avatar-four">M</span>
+          </div>
+          <span class="operator-divider"></span>
+          <span class="operator-label">Built for grid operators</span>
+        </article>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Section 02: About & Problem -->
+  <section class="about-page" id="about">
+    <div class="landscape" aria-hidden="true"></div>
+    <div class="mist" aria-hidden="true"></div>
+    <div class="edge-frame" aria-hidden="true"></div>
+
+    <div class="content">
+      <div class="section-kicker">
+        <span>02</span><span class="slash">/</span><span>ABOUT &amp; PROBLEM</span>
+        <span class="kicker-rule"></span>
+      </div>
+
+      <h1>When the grid gives<br>a warning,<br><span>every signal matters.</span></h1>
+
+      <p class="intro">
+        Transformer failures can be costly. Early warning signs,<br class="desktop">
+        disconnected alerts and reactive maintenance make<br class="desktop">
+        risks harder to act on in time.
+      </p>
+
+      <div class="problem-cards">
+        <article class="problem-card outage">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18.8 2.8 7.4 17h7.3l-1.5 12.2L25 13.8h-7.2l1-11Z"/></svg>
+          </div>
+          <h2>Unplanned outages</h2>
+          <p>Disruption and<br>emergency repairs.</p>
+          <span class="card-accent"></span>
+        </article>
+        <article class="problem-card safety">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7.5v7.7c0 6.3-4.7 10.8-11 13.8C9.7 26 5 21.5 5 15.2V7.5L16 3Z"/><path d="m11.5 15.8 3 3 6-6.5"/></svg>
+          </div>
+          <h2>Safety risks</h2>
+          <p>Equipment damage<br>and field exposure.</p>
+          <span class="card-accent"></span>
+        </article>
+        <article class="problem-card response">
+          <div class="card-icon">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="7" rx="10" ry="3.5"/><path d="M6 7v6c0 2 4.5 3.5 10 3.5S26 15 26 13V7M6 13v6c0 2 4.5 3.5 10 3.5S26 21 26 19v-6M6 19v6c0 2 4.5 3.5 10 3.5S26 27 26 25v-6"/></svg>
+          </div>
+          <h2>Siloed response</h2>
+          <p>Alerts, spare assets<br>and dispatch can be<br class="card-break"> disconnected.</p>
+          <span class="card-accent"></span>
+        </article>
+      </div>
+
+      <div class="bottom-statement">
+        <span class="statement-rule"></span>
+        <p>GridPulse <span>connects telemetry, early risk signals and coordinated decisions.</span></p>
+      </div>
+    </div>
+
+    <div class="flow-diagram" aria-label="GridPulse signal flow">
+      <div class="flow-card source">
+        <div class="flow-icon tower-icon">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 12 36M20 3l8 33M14 12h12M12.5 18h15M11 25h18M9 32h22M15 9l10 0M12 18l16 7M28 18l-16 7M14 12l12 13M26 12 14 25"/></svg>
+        </div>
+        <strong>EXISTING<br>SCADA / RTU DATA</strong>
+      </div>
+      <svg class="connector connector-one" viewBox="0 0 160 100" aria-hidden="true"><path d="M0 0v34h36v32h124" /><circle cx="0" cy="34" r="4.5"/><circle cx="36" cy="66" r="4.5"/></svg>
+      <svg class="connector connector-two" viewBox="0 0 130 100" aria-hidden="true"><path d="M0 100V55h35V25h95"/><circle cx="0" cy="55" r="4.5"/></svg>
+      <div class="flow-card action">
+        <div class="flow-icon signal-icon">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 22h8l4-12 7 23 6-17 4 6h5"/></svg>
+        </div>
+        <strong>FROM SIGNALS<br>TO ACTION</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 03: How It Works -->
+  <section class="page how-page" id="how">
+    <div class="scene-bg" aria-hidden="true"></div>
+    <div class="soft-wash" aria-hidden="true"></div>
+    <div class="page-frame" aria-hidden="true"></div>
+
+    <div class="intro">
+      <div class="section-label"><span>03</span><b>/</b><span>HOW IT WORKS</span><i></i></div>
+      <h1>From data<br><span>to action.</span></h1>
+      <p>GridPulse transforms your existing<br class="desktop"> telemetry into early warnings and<br class="desktop"> coordinated maintenance decisions<br class="desktop"> — in four simple steps.</p>
+      <a class="action-button" href="#steps">See it in action <span>→</span></a>
+    </div>
+
+    <div class="signal-flow" aria-label="GridPulse workflow overview">
+      <div class="flow-label input-label">
+        <span class="flow-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 22h8l4-12 7 23 6-17 4 6h5"/></svg></span>
+        <strong>Existing<br>SCADA / RTU Data</strong>
+      </div>
+      <div class="flow-label output-label">
+        <span class="flow-icon check-icon"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13"/><path d="m13 20 5 5 10-11"/></svg></span>
+        <strong>Coordinated<br>Maintenance Response</strong>
+      </div>
+      <svg class="flow-line" viewBox="0 0 800 300" preserveAspectRatio="none" aria-hidden="true">
+        <path class="line-glow" d="M90 70 C150 35 170 115 220 115 S300 165 365 160 S465 210 525 180 S650 210 730 205"/>
+        <path class="line-main" d="M90 70 C150 35 170 115 220 115 S300 165 365 160 S465 210 525 180 S650 210 730 205"/>
+        <circle cx="90" cy="70" r="4"/><circle cx="220" cy="115" r="4"/><circle cx="365" cy="160" r="4"/><circle cx="525" cy="180" r="4"/><circle cx="730" cy="205" r="4"/>
+      </svg>
+      <div class="scene-item substation" aria-hidden="true">
+        <div class="tower-mini"><i></i><b></b><em></em></div>
+        <div class="transformer"><span></span><span></span><span></span><i></i></div>
+        <div class="tiny-tree"></div>
+      </div>
+      <div class="platform platform-one" aria-hidden="true">
+        <div class="monitor monitor-graph"><div class="monitor-top"></div><svg viewBox="0 0 180 75"><path d="M2 62 L18 51 32 56 48 31 60 40 75 18 88 37 101 29 118 11 131 25 147 19 162 4 178 9" /></svg><span class="alert-triangle">!</span></div>
+        <div class="monitor-base"></div>
+      </div>
+      <div class="platform platform-two" aria-hidden="true">
+        <div class="brain-tile"><svg viewBox="0 0 40 40"><path d="M20 7c-5-5-11 0-9 5-6 1-7 9-2 12-3 6 2 10 7 8l4-4V7Zm0 0c5-5 11 0 9 5 6 1 7 9 2 12 3 6-2 10-7 8l-4-4M13 15l5 4-4 5m13-9-5 4 4 5M20 8v20"/></svg></div>
+        <div class="monitor monitor-risk"><div class="monitor-top"></div><div class="radar"><i></i><b></b></div><span class="radar-dot"></span></div>
+        <div class="monitor-base"></div>
+      </div>
+      <div class="platform platform-three" aria-hidden="true">
+        <div class="tool-tile"><svg viewBox="0 0 40 40"><path d="M24 5a10 10 0 0 0-11 13L4 27l8 8 9-9a10 10 0 0 0 13-11l-7 7-6-6 7-7Z"/></svg></div>
+        <div class="monitor monitor-plan"><div class="plan-head"></div><div class="plan-row"><i></i><b></b></div><div class="plan-row"><i></i><b></b></div><div class="plan-row"><i></i><b></b></div><div class="plan-row"><i></i><b></b></div></div>
+        <div class="monitor-base"></div>
+      </div>
+      <div class="service-truck" aria-hidden="true"><div class="truck-cab"></div><div class="truck-box"></div><div class="truck-wheel wheel-a"></div><div class="truck-wheel wheel-b"></div><div class="truck-wheel wheel-c"></div></div>
+    </div>
+
+    <div class="steps" id="steps" aria-label="Four GridPulse workflow steps">
+      <article class="step-card" tabindex="0" data-detail="Use existing SCADA/RTU telemetry and asset data — no new sensors required.">
+        <div class="step-top"><span>01</span><button aria-label="Read about ingest existing data" type="button">→</button></div>
+        <h2><span>Ingest</span> Existing Data</h2>
+        <p>Use your SCADA/RTU telemetry<br class="wide"> and asset data — no new sensors<br class="wide"> required.</p>
+        <div class="thumbnail thumb-substation" role="img" aria-label="Illustration of a power substation">
+          <div class="thumb-poles"><i></i><i></i><i></i></div><div class="thumb-transformer"></div>
+          <div class="thumb-caption"><span class="mini-symbol">▥</span><span><b>SCADA / RTU</b><small>Live &amp; historical data</small></span></div>
+        </div>
+      </article>
+      <article class="step-card" tabindex="0" data-detail="Analyze telemetry with AI/ML to identify early risk signals and calculate a Composite Health Index.">
+        <div class="step-top"><span>02</span><button aria-label="Read about analyze and predict" type="button">→</button></div>
+        <h2><span>Analyze</span> &amp; Predict</h2>
+        <p>Detect early risk signals using<br class="wide"> AI/ML and a Composite<br class="wide"> Health Index (CHI).</p>
+        <div class="thumbnail thumb-chart" role="img" aria-label="Risk detection analytics dashboard">
+          <div class="chart-grid"></div><svg viewBox="0 0 330 115"><path class="chart-line" d="M0 83 Q20 58 42 73 T85 67 T125 75 T160 34 T197 56 T235 19 T275 49 T330 27"/><path class="chart-alert" d="M0 83 Q20 58 42 73 T85 67 T125 75 T160 34 T197 56 T235 19 T275 49 T330 27"/></svg><span class="chart-warning">!</span>
+          <div class="thumb-caption"><span class="mini-symbol">⌁</span><span><b>Risk detection</b><small>Early warnings</small></span></div>
+        </div>
+      </article>
+      <article class="step-card" tabindex="0" data-detail="Turn risk signals into prioritized inspections, repairs and resource planning recommendations.">
+        <div class="step-top"><span>03</span><button aria-label="Read about plan maintenance" type="button">→</button></div>
+        <h2><span>Plan</span> Maintenance</h2>
+        <p>Generate prioritized recommendations<br class="wide"> for inspections, repairs and resource<br class="wide"> planning.</p>
+        <div class="thumbnail thumb-planner" role="img" aria-label="Maintenance scheduling interface">
+          <div class="planner-sidebar"><i></i><i></i><i></i><i></i><i></i></div><div class="planner-grid"><i></i><i></i><i></i><i></i><i></i><b></b><b></b><b></b><b></b><b></b><em></em><em></em></div>
+          <div class="thumb-caption"><span class="mini-symbol">⚒</span><span><b>Optimized plan</b><small>Right action, right time</small></span></div>
+        </div>
+      </article>
+      <article class="step-card" tabindex="0" data-detail="Coordinate teams, spare assets and dispatch for a faster response across field operations.">
+        <div class="step-top"><span>04</span><button aria-label="Read about coordinate and dispatch" type="button">→</button></div>
+        <h2><span>Coordinate</span> &amp; Dispatch</h2>
+        <p>Enable faster, coordinated response<br class="wide"> across teams and field operations.</p>
+        <div class="thumbnail thumb-truck" role="img" aria-label="Utility maintenance truck on the road">
+          <div class="road"></div><div class="truck-small"><i></i><b></b><em></em></div><div class="pylon"><i></i><b></b></div>
+          <div class="thumb-caption"><span class="mini-symbol">♧</span><span><b>Field coordination</b><small>Spare assets &amp; dispatch</small></span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Section 04: Capabilities & Applications -->
+  <section class="capabilities-page" id="capabilities">
+    <div class="background-landscape" aria-hidden="true"></div>
+    <div class="background-mist" aria-hidden="true"></div>
+
+    <div class="main-content">
+      <div class="left-content">
+        <div class="section-label"><span>04</span><b>/</b><span>CAPABILITIES &amp; APPLICATIONS</span><i></i></div>
+        <h1>Built for a<br><span>more resilient</span> grid.</h1>
+        <p class="lead">GridPulse turns existing telemetry into actionable<br class="desktop"> insights, helping utilities detect risks earlier, plan smarter<br class="desktop"> and keep the grid reliable.</p>
+
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon pulse"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 26h10l5-13 7 25 6-18 4 6h8"/></svg></div>
+            <div><h2>Early Risk Detection</h2><p>Identify anomalies and<br>potential failures before<br>they happen.</p></div>
+          </article>
+          <article class="feature">
+            <div class="feature-icon shield"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5 39 11v11c0 10-6.5 17-15 21C15.5 39 9 32 9 22V11L24 5Z"/></svg></div>
+            <div><h2>Smarter Maintenance</h2><p>Prioritize inspections<br>and repairs with<br>data-driven insights.</p></div>
+          </article>
+          <article class="feature">
+            <div class="feature-icon network"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="11" r="5"/><circle cx="11" cy="34" r="5"/><circle cx="37" cy="34" r="5"/><path d="m21 16-7 13m13-13 7 13M16 34h16"/></svg></div>
+            <div><h2>Coordinated Response</h2><p>Align teams, resources<br>and timelines during<br>emergencies.</p></div>
+          </article>
+          <article class="feature">
+            <div class="feature-icon bars"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="27" width="7" height="14" rx="1"/><rect x="21" y="17" width="7" height="24" rx="1"/><rect x="35" y="7" width="7" height="34" rx="1"/></svg></div>
+            <div><h2>Better Resource Planning</h2><p>Optimize asset utilization<br>and reduce unplanned<br>downtime.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <aside class="impact-panel" aria-label="Real-world impact">
+        <div class="impact-photo" aria-hidden="true"></div>
+        <div class="impact-shade" aria-hidden="true"></div>
+        <div class="impact-heading">
+          <div class="impact-kicker">REAL-WORLD IMPACT <span></span></div>
+          <h2>From utilities<br>to communities.</h2>
+          <p>Stronger grid operations lead to safer,<br>more reliable and more sustainable<br>energy for everyone.</p>
+        </div>
+        <div class="impact-stats">
+          <div class="impact-stat">
+            <div class="stat-icon"><svg viewBox="0 0 48 48"><path d="M28 3 10 25h12l-2 20 19-27H26l2-15Z"/></svg></div>
+            <div><b>Fewer<br>Outages</b><i></i></div>
+          </div>
+          <span class="stat-divider"></span>
+          <div class="impact-stat">
+            <div class="stat-icon"><svg viewBox="0 0 48 48"><path d="M39 7C22 5 10 14 10 27c0 7 5 12 12 12C35 39 42 24 39 7Z"/><path d="M8 42 30 17"/></svg></div>
+            <div><b>Lower<br>Operating Costs</b><i></i></div>
+          </div>
+          <span class="stat-divider"></span>
+          <div class="impact-stat">
+            <div class="stat-icon"><svg viewBox="0 0 48 48"><circle cx="18" cy="15" r="7"/><circle cx="34" cy="19" r="5"/><path d="M4 40v-4c0-7 6-12 14-12s14 5 14 12v4H4Zm26-13c8-1 14 4 14 11v2H35"/></svg></div>
+            <div><b>More Reliable<br>Communities</b><i></i></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="applications" aria-label="Key applications">
+      <div class="applications-heading">
+        <h2>KEY APPLICATIONS</h2>
+        <span class="heading-rule"></span>
+        <p>TRUSTED ACROSS THE ENERGY ECOSYSTEM</p>
+        <div class="carousel-controls">
+          <button id="prevApplications" type="button" aria-label="Previous applications">←</button>
+          <button id="nextApplications" type="button" aria-label="Next applications">→</button>
+        </div>
+      </div>
+
+      <div class="application-track" id="applicationTrack">
+        <article class="application-card">
+          <div class="application-image transmission" role="img" aria-label="Transmission towers across a landscape"><i></i><b></b></div>
+          <div class="application-copy"><h3>Transmission<br>Operators</h3><p>Monitor critical assets<br>and prevent failures.</p></div>
+          <button class="open-application" aria-label="Learn about Transmission Operators" data-title="Transmission Operators" data-detail="Monitor critical transmission assets and identify potential failures earlier." type="button">↗</button>
+        </article>
+        <article class="application-card">
+          <div class="application-image distribution" role="img" aria-label="Electrical distribution substation"><i></i><b></b></div>
+          <div class="application-copy"><h3>Distribution<br>Utilities</h3><p>Improve reliability<br>and outage response.</p></div>
+          <button class="open-application" aria-label="Learn about Distribution Utilities" data-title="Distribution Utilities" data-detail="Improve distribution reliability with clearer alerts and coordinated outage response." type="button">↗</button>
+        </article>
+        <article class="application-card">
+          <div class="application-image control" role="img" aria-label="Grid control center"><div class="control-screens"></div><div class="operator"></div></div>
+          <div class="application-copy"><h3>Grid Control<br>Centers</h3><p>Get a unified view for<br>faster decision-making.</p></div>
+          <button class="open-application" aria-label="Learn about Grid Control Centers" data-title="Grid Control Centers" data-detail="Bring telemetry and risk signals into a unified view for faster decisions." type="button">↗</button>
+        </article>
+        <article class="application-card">
+          <div class="application-image renewable" role="img" aria-label="Wind turbines and solar panels at sunset"><div class="sun"></div><i></i><b></b></div>
+          <div class="application-copy"><h3>Renewable<br>Integration</h3><p>Manage variability<br>and ensure stability.</p></div>
+          <button class="open-application" aria-label="Learn about Renewable Integration" data-title="Renewable Integration" data-detail="Manage changing renewable generation and support a more stable grid." type="button">↗</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 05: Impact -->
+  <section class="impact-page" id="impact">
+    <div class="top-landscape" aria-hidden="true"></div>
+    <div class="top-wash" aria-hidden="true"></div>
+
+    <div class="impact-content">
+      <div class="intro">
+        <div class="section-label"><span>05</span><b>/</b><span>IMPACT</span><i></i></div>
+        <h1>Real impact<br>for a <span>stronger,</span><br><span>cleaner</span> tomorrow.</h1>
+        <p>By turning existing telemetry into early warnings and<br class="desktop"> coordinated action, GridPulse helps utilities operate<br class="desktop"> more reliably, efficiently and sustainably.</p>
+      </div>
+
+      <div class="metrics-grid" aria-label="Estimated GridPulse impact metrics">
+        <article class="metric-card outages">
+          <div class="metric-icon"><svg viewBox="0 0 48 48"><path d="M28 3 10 25h12l-2 20 19-27H26l2-15Z"/></svg></div>
+          <strong>30%</strong><p>Fewer unplanned<br>outages (est.)</p>
+        </article>
+        <article class="metric-card costs">
+          <div class="metric-icon"><svg viewBox="0 0 48 48"><path d="M39 7C22 5 10 14 10 27c0 7 5 12 12 12C35 39 42 24 39 7Z"/><path d="M8 42 30 17"/></svg></div>
+          <strong>20%</strong><p>Lower operating<br>costs (est.)</p>
+        </article>
+        <article class="metric-card carbon">
+          <div class="metric-icon"><svg viewBox="0 0 48 48"><path d="M24 7c-7-6-16 0-15 9-7 4-5 14 2 16 1 8 10 10 14 4 4 6 13 4 14-4 7-2 9-12 2-16 1-9-8-15-15-9Z"/><path d="M17 18h14M16 25h16M20 32h8"/></svg></div>
+          <strong>25%</strong><p>Reduced carbon<br>footprint (est.)</p>
+        </article>
+        <article class="metric-card communities">
+          <div class="metric-icon"><svg viewBox="0 0 48 48"><circle cx="18" cy="15" r="7"/><circle cx="34" cy="19" r="5"/><path d="M4 40v-4c0-7 6-12 14-12s14 5 14 12v4H4Zm26-13c8-1 14 4 14 11v2H35"/></svg></div>
+          <strong class="more">More</strong><p>Reliable power<br>for communities</p>
+        </article>
+      </div>
+
+      <aside class="renewable-scene" aria-label="Renewable energy and transmission landscape">
+        <div class="wind-turbine"><i></i><b></b><em></em><span></span></div>
+        <div class="power-tower tower-large"><i></i><b></b><em></em></div>
+        <div class="power-tower tower-small"><i></i><b></b><em></em></div>
+        <div class="solar-array"><i></i><i></i><i></i><i></i></div>
+        <div class="scene-caption">
+          <div class="caption-icon"><svg viewBox="0 0 48 48"><rect x="7" y="27" width="7" height="14" rx="1"/><rect x="21" y="17" width="7" height="24" rx="1"/><rect x="35" y="7" width="7" height="34" rx="1"/></svg></div>
+          <p>A more resilient<br>grid for future<br>generations.</p>
+        </div>
+      </aside>
+
+      <div class="benefits">
+        <article class="benefit">
+          <div class="benefit-icon"><svg viewBox="0 0 48 48"><path d="M24 5 39 11v11c0 10-6.5 17-15 21C15.5 39 9 32 9 22V11L24 5Z"/></svg></div>
+          <div><h2>Greater Reliability</h2><p>Detect risks early and<br>reduce downtime.</p></div>
+        </article>
+        <span class="benefit-divider"></span>
+        <article class="benefit">
+          <div class="benefit-icon"><svg viewBox="0 0 48 48"><path d="M39 7C22 5 10 14 10 27c0 7 5 12 12 12C35 39 42 24 39 7Z"/><path d="M8 42 30 17"/></svg></div>
+          <div><h2>Sustainable Operations</h2><p>Optimize resources and<br>support clean energy.</p></div>
+        </article>
+        <span class="benefit-divider"></span>
+        <article class="benefit">
+          <div class="benefit-icon"><svg viewBox="0 0 48 48"><circle cx="18" cy="15" r="7"/><circle cx="34" cy="19" r="5"/><path d="M4 40v-4c0-7 6-12 14-12s14 5 14 12v4H4Zm26-13c8-1 14 4 14 11v2H35"/></svg></div>
+          <div><h2>Stronger Communities</h2><p>Safer, more reliable<br>power for everyone.</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 06: Login Portal -->
+  <section class="login-page" id="login">
+    <div class="background-photo" aria-hidden="true"></div>
+    <div class="background-overlay" aria-hidden="true"></div>
+    <div class="page-frame" aria-hidden="true"></div>
+
+    <div class="hero-side" aria-label="GridPulse introduction">
+      <a class="brand" href="#home" aria-label="GridPulse">
+        <svg viewBox="0 0 36 48" aria-hidden="true"><path d="M21.5 1 3 26h12l-2 21L33 19H20.5L21.5 1Z"/></svg>
+        <span>GRID<span>PULSE</span></span>
+      </a>
+
+      <div class="hero-copy">
+        <p class="eyebrow">INTELLIGENT GRID OPERATIONS</p>
+        <h1>From signals<br>to a <span>stronger</span><br>tomorrow.</h1>
+        <p class="hero-description">GridPulse transforms existing SCADA telemetry<br class="desktop"> into early warnings and coordinated maintenance<br class="desktop"> decisions — for a more reliable and sustainable<br class="desktop"> energy future.</p>
+      </div>
+
+      <div class="hero-benefits">
+        <div class="hero-benefit">
+          <span class="benefit-icon"><svg viewBox="0 0 48 48"><path d="M24 5 39 11v11c0 10-6.5 17-15 21C15.5 39 9 32 9 22V11L24 5Z"/><path d="m16 23 6 6 11-13"/></svg></span>
+          <span>Safer<br>Grids</span>
+        </div>
+        <i class="benefit-divider"></i>
+        <div class="hero-benefit">
+          <span class="benefit-icon"><svg viewBox="0 0 48 48"><path d="M39 7C22 5 10 14 10 27c0 7 5 12 12 12C35 39 42 24 39 7Z"/><path d="M8 42 30 17"/></svg></span>
+          <span>Cleaner<br>Energy</span>
+        </div>
+        <i class="benefit-divider"></i>
+        <div class="hero-benefit">
+          <span class="benefit-icon"><svg viewBox="0 0 48 48"><rect x="7" y="27" width="7" height="14" rx="1"/><rect x="21" y="17" width="7" height="24" rx="1"/><rect x="35" y="7" width="7" height="34" rx="1"/></svg></span>
+          <span>More Reliable<br>Communities</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-card" aria-labelledby="loginTitle">
+      <a href="#home" class="back-link" id="backLink"><span>←</span> Back to website</a>
+
+      <div class="form-heading">
+        <p class="eyebrow">WELCOME TO GRIDPULSE</p>
+        <h2 id="loginTitle">Login to your <span>account</span></h2>
+        <p>Access your dashboard to monitor, analyze and<br class="desktop"> manage your grid operations.</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <label class="input-wrap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>
+          <input type="email" name="email" id="email" placeholder="Email address" autocomplete="email" required>
+        </label>
+        <label class="input-wrap password-wrap">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="12" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v4"/></svg>
+          <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password" required minlength="6">
+          <button class="toggle-password" id="togglePassword" type="button" aria-label="Show password">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </label>
+
+        <div class="form-options">
+          <label class="remember"><input type="checkbox" name="remember" id="remember"><span class="custom-checkbox"></span><span>Remember me</span></label>
+          <a href="#" id="forgotPassword">Forgot password?</a>
+        </div>
+
+        <button class="submit-button" type="submit">Login <span>→</span></button>
+      </form>
+
+      <div class="separator"><span></span><p>OR</p><span></span></div>
+
+      <div class="social-buttons">
+        <button type="button" class="social-button" id="googleLogin">
+          <span class="google-logo" aria-hidden="true">G</span> Continue with Google
+        </button>
+        <button type="button" class="social-button" id="microsoftLogin">
+          <span class="microsoft-logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Continue with Microsoft
+        </button>
+      </div>
+
+      <p class="signup-text">Don’t have an account? <a href="#" id="signupLink">Sign up</a></p>
+      <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- Global Footer -->
+  <footer class="footer" id="contact">
+    <div class="footer-background" aria-hidden="true"></div>
+    <div class="footer-main">
+      <section class="footer-cta">
+        <span class="footer-kicker">GET STARTED</span>
+        <h2>Turn your grid data<br>into <span>real impact.</span></h2>
+        <p>Join forward-thinking utilities using GridPulse<br class="desktop"> to build a more resilient and sustainable grid.</p>
+        <div class="footer-buttons">
+          <a class="demo-button" href="mailto:hello@gridpulse.example?subject=GridPulse%20Demo">Request a Demo <span>→</span></a>
+          <a class="contact-button" href="mailto:hello@gridpulse.example">Contact Us</a>
+        </div>
+      </section>
+      <span class="footer-divider footer-divider-one"></span>
+      <section class="footer-brand">
+        <a class="brand footer-logo" href="#home" aria-label="GridPulse home">
+          <svg viewBox="0 0 36 48" aria-hidden="true"><path d="M21.5 1 3 26h12l-2 21L33 19H20.5L21.5 1Z"/></svg>
+          <span>GRID<span>PULSE</span></span>
+        </a>
+        <p>From signals to a stronger tomorrow.</p>
+        <div class="social-links" aria-label="Social links">
+          <a href="#linkedin" aria-label="LinkedIn">in</a>
+          <a href="#youtube" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7a3 3 0 0 0-2-2C19 4.5 12 4.5 12 4.5s-7 0-9 .5a3 3 0 0 0-2 2A30 30 0 0 0 .5 12 30 30 0 0 0 1 17a3 3 0 0 0 2 2c2 .5 9 .5 9 .5s7 0 9-.5a3 3 0 0 0 2-2 30 30 0 0 0 .5-5A30 30 0 0 0 23 7ZM9.5 16V8l7 4Z"/></svg></a>
+          <a href="#x" aria-label="X">𝕏</a>
+        </div>
+      </section>
+      <span class="footer-divider footer-divider-two"></span>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#how">How It Works</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 GridPulse. All rights reserved.</span>
+      <nav aria-label="Legal links"><a href="#privacy">Privacy Policy</a><a href="#terms">Terms of Service</a><button id="cookieSettings" type="button">Cookie Settings</button></nav>
+    </div>
+  </footer>
+
+  <!-- Global Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
