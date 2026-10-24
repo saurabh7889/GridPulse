@@ -227,114 +227,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // --------------------------------------------------------------------------
-  // Section 06: Login Portal Interactions (G6)
+  // Operations Portal / Login Link Toast
   // --------------------------------------------------------------------------
   const loginNavBtn = document.getElementById("loginButton");
-  const loginSection = document.getElementById("login");
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const formMessage = document.getElementById("formMessage");
-  const togglePasswordBtn = document.getElementById("togglePassword");
-  const loginForm = document.getElementById("loginForm");
-  const backLink = document.getElementById("backLink");
-
-  // Scroll to login section & focus email input
-  if (loginNavBtn && loginSection) {
-    loginNavBtn.addEventListener("click", (event) => {
-      event.preventDefault();
-      loginSection.scrollIntoView({ behavior: "smooth" });
-      setTimeout(() => {
-        if (emailInput) emailInput.focus();
-      }, 600);
-      showToast("Welcome to the GridPulse login portal.");
-    });
-  }
-
-  // Smooth scroll back to top from login
-  if (backLink) {
-    backLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      const homeSection = document.getElementById("home");
-      if (homeSection) {
-        homeSection.scrollIntoView({ behavior: "smooth" });
-      }
-      showToast("Returned to GridPulse overview.");
-    });
-  }
-
-  function showFormMessage(text, isError = false) {
-    if (!formMessage) return;
-    formMessage.textContent = text;
-    formMessage.classList.toggle("error", isError);
-  }
-
-  // Password visibility toggle
-  if (togglePasswordBtn && passwordInput) {
-    togglePasswordBtn.addEventListener("click", () => {
-      const showing = passwordInput.type === "text";
-      passwordInput.type = showing ? "password" : "text";
-      togglePasswordBtn.setAttribute("aria-label", showing ? "Show password" : "Hide password");
-    });
-  }
-
-  // Login form submit validation
-  if (loginForm && emailInput && passwordInput) {
-    loginForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-
-      if (!email || !emailInput.checkValidity()) {
-        showFormMessage("Please enter a valid email address.", true);
-        emailInput.focus();
-        return;
-      }
-      if (password.length < 6) {
-        showFormMessage("Password must contain at least 6 characters.", true);
-        passwordInput.focus();
-        return;
-      }
-
-      showFormMessage("Form validated. Connect your backend authentication API to sign in.");
-      showToast("Login validated. Backend authentication hook ready.");
-    });
-  }
-
-  // Forgot password handler
-  const forgotPasswordBtn = document.getElementById("forgotPassword");
-  if (forgotPasswordBtn && emailInput) {
-    forgotPasswordBtn.addEventListener("click", (event) => {
-      event.preventDefault();
-      const email = emailInput.value.trim();
-      if (email && emailInput.checkValidity()) {
-        showFormMessage(`Password reset can be requested for ${email} once a reset service is connected.`);
-      } else {
-        showFormMessage("Enter your email address first, then choose Forgot password.", true);
-        emailInput.focus();
-      }
-    });
-  }
-
-  // OAuth buttons
-  const googleLoginBtn = document.getElementById("googleLogin");
-  if (googleLoginBtn) {
-    googleLoginBtn.addEventListener("click", () => {
-      showFormMessage("Google sign-in requires Google OAuth configuration.");
-    });
-  }
-
-  const microsoftLoginBtn = document.getElementById("microsoftLogin");
-  if (microsoftLoginBtn) {
-    microsoftLoginBtn.addEventListener("click", () => {
-      showFormMessage("Microsoft sign-in requires Microsoft identity configuration.");
-    });
-  }
-
-  const signupLink = document.getElementById("signupLink");
-  if (signupLink) {
-    signupLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      showFormMessage("Connect this link to your account registration page.");
+  if (loginNavBtn) {
+    loginNavBtn.addEventListener("click", () => {
+      showToast("Opening GridPulse Operations Login Portal...");
     });
   }
 });
+
