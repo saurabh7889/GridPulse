@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     activeOrderTab: "Work orders",
     telemetryRecords: 8421950,
     reroutedState: false,
+    isFaultMode: false,
     assets: {
       "TX-01": {
         id: "TX-01",
@@ -2013,6 +2014,56 @@ Telemetry samples verified by GridPulse SCADA Controller.
     notify(`Performance chart series switched to: ${metricSelect.value}`);
   });
 
+  // Expand / Focus Reports Chart
+  const expandReportsBtn = document.getElementById("expandReportsChart");
+  const chartPanel = document.querySelector(".chart-panel");
+  expandReportsBtn?.addEventListener("click", () => {
+    const isExpanded = chartPanel?.classList.toggle("expanded");
+    expandReportsBtn.classList.toggle("active", isExpanded);
+    const span = expandReportsBtn.querySelector("span");
+    if (span) span.textContent = isExpanded ? "Collapse" : "Expand";
+    renderPerformanceChart();
+    notify(isExpanded ? "Chart view expanded across viewport." : "Chart view restored to default.");
+  });
+
+  // Fault Mode Toggle in Reports
+  const faultModeBtn = document.getElementById("faultModeBtn");
+  const faultBanner = document.getElementById("faultBanner");
+  const reportsBody = document.getElementById("reportsBody");
+  const originalReportsHTML = reportsBody ? reportsBody.innerHTML : "";
+
+  const faultyRowsHTML = `
+    <tr class="fault-row" data-report="TX-04 Voltage Surge Alert Log" data-type="ALERT" data-range="Today" data-generated="Real-time">
+      <td>TX-04 Voltage Surge Alert Log</td><td>ALERT</td><td>Today</td><td>Just now</td>
+      <td><span class="fault-status-pill">⚠ Critical</span></td>
+      <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
+    </tr>
+    <tr class="fault-row" data-report="North Feeder Harmonic Instability" data-type="ALERT" data-range="Today" data-generated="Real-time">
+      <td>North Feeder Harmonic Instability</td><td>ALERT</td><td>Today</td><td>2 min ago</td>
+      <td><span class="fault-status-pill">⚠ Fault</span></td>
+      <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
+    </tr>
+    <tr class="fault-row" data-report="Substation Thermal Overload Diagnostic" data-type="ALERT" data-range="Today" data-generated="Real-time">
+      <td>Substation Thermal Overload Diagnostic</td><td>ALERT</td><td>Today</td><td>5 min ago</td>
+      <td><span class="fault-status-pill">⚠ Fault</span></td>
+      <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
+    </tr>`;
+
+  faultModeBtn?.addEventListener("click", () => {
+    GridState.isFaultMode = !GridState.isFaultMode;
+    faultModeBtn.classList.toggle("active", GridState.isFaultMode);
+    faultModeBtn.setAttribute("aria-pressed", String(GridState.isFaultMode));
+    const btnSpan = faultModeBtn.querySelector("span");
+    if (btnSpan) btnSpan.textContent = GridState.isFaultMode ? "Normal Mode" : "Fault Mode";
+
+    if (faultBanner) faultBanner.hidden = !GridState.isFaultMode;
+    if (chartPanel) chartPanel.classList.toggle("fault-mode", GridState.isFaultMode);
+    if (reportsBody) reportsBody.innerHTML = GridState.isFaultMode ? faultyRowsHTML : originalReportsHTML;
+
+    renderPerformanceChart();
+    notify(GridState.isFaultMode ? "⚠ SIMULATION: Fault mode active. High voltage/load anomalies injected." : "Grid status normalized. Live telemetry restored.", GridState.isFaultMode ? "critical" : "healthy");
+  });
+
   document.getElementById("reportsLocationSelect")?.addEventListener("change", e => {
     notify(`Filtered performance overview for ${e.target.value}.`);
   });
@@ -2251,40 +2302,108 @@ Telemetry samples verified by GridPulse SCADA Controller.
   }
 
   // Render Reports Performance Multi-Series Chart
+  let chartTickPhase = 0;
   function renderPerformanceChart() {
     const totalLine = document.getElementById("totalLine");
     const totalArea = document.getElementById("totalArea");
     const northLine = document.getElementById("northLine");
     const westLine = document.getElementById("westLine");
     const eastLine = document.getElementById("eastLine");
+    const tooltipVal = document.getElementById("reportsTooltipValue");
+    const yLabelsEl = document.getElementById("reportsYLabels");
+    const metricSelect = document.getElementById("metricSelect");
 
-    const baseMw = GridState.gridLoad.total;
+    chartTickPhase += 0.28;
+
+    // Check selected metric
+    const metric = metricSelect?.value || "Load (MW)";
+    let maxVal = 55;
+    let unit = "MW";
+    if (metric.includes("Voltage")) {
+      maxVal = 15;
+      unit = "kV";
+      if (yLabelsEl) yLabelsEl.innerHTML = `<span>15 kV</span><span>12 kV</span><span>9 kV</span><span>6 kV</span><span>3 kV</span><span>0 kV</span>`;
+    } else if (metric.includes("Current")) {
+      maxVal = 500;
+      unit = "A";
+      if (yLabelsEl) yLabelsEl.innerHTML = `<span>500 A</span><span>400 A</span><span>300 A</span><span>200 A</span><span>100 A</span><span>0 A</span>`;
+    } else {
+      maxVal = 55;
+      unit = "MW";
+      if (yLabelsEl) yLabelsEl.innerHTML = `<span>50 MW</span><span>40 MW</span><span>30 MW</span><span>20 MW</span><span>10 MW</span><span>0 MW</span>`;
+    }
+
     const w = 820;
-    const pointsCount = 15;
+    const h = 220; // 0..220 matches SVG viewBox
+    const pointsCount = 21;
     const step = w / (pointsCount - 1);
+    const isFault = Boolean(GridState.isFaultMode);
 
-    const makeSeriesPath = (base, amp, freq, offset) => {
+    let baseTotal = GridState.gridLoad.total;
+    let baseNorth = GridState.gridLoad.north;
+    let baseWest = GridState.gridLoad.west;
+    let baseEast = GridState.gridLoad.east;
+
+    if (unit === "kV") {
+      baseTotal = 11.2;
+      baseNorth = 11.4;
+      baseWest = 10.9;
+      baseEast = 11.1;
+    } else if (unit === "A") {
+      baseTotal = 340;
+      baseNorth = 140;
+      baseWest = 110;
+      baseEast = 90;
+    }
+
+    const makeSeriesPath = (base, amp, freq, phase, faultMultiplier = 1) => {
       const pts = [];
       for (let i = 0; i < pointsCount; i++) {
         const x = Math.round(i * step);
-        const noise = Math.sin(i * freq + offset) * amp + (Math.random() - 0.5) * 1.2;
-        const val = Math.max(5, base + noise);
-        const y = Math.round(165 - (val / 55) * 165);
-        pts.push({ x, y });
+        let val;
+        if (isFault) {
+          // Sharp abnormal spikes, voltage crashes, rapid instability
+          const spike = (i === 4 || i === 11 || i === 17) ? (amp * 2.8 * faultMultiplier) :
+                        (i === 7 || i === 14) ? (-amp * 2.2 * faultMultiplier) :
+                        Math.sin(i * 1.9 + chartTickPhase * 2 + phase) * amp * 1.4;
+          const jitter = (Math.random() - 0.5) * amp * 0.5;
+          val = Math.max(0.06 * maxVal, Math.min(0.97 * maxVal, base + spike + jitter));
+        } else {
+          // Natural undulating grid fluctuations with prominent peaks and troughs
+          const wave1 = Math.sin(i * freq + chartTickPhase + phase) * amp;
+          const wave2 = Math.cos(i * (freq * 0.55) - chartTickPhase * 0.45) * (amp * 0.45);
+          const noise = (Math.random() - 0.5) * (amp * 0.18);
+          val = Math.max(0.12 * maxVal, Math.min(0.88 * maxVal, base + wave1 + wave2 + noise));
+        }
+        const y = Math.round(h - (val / maxVal) * h);
+        pts.push({ x, y, val });
       }
-      return pts.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" ");
+      return {
+        d: pts.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join(" "),
+        pts
+      };
     };
 
-    const dTotal = makeSeriesPath(baseMw, 5, 0.5, 0.4);
-    const dNorth = makeSeriesPath(GridState.gridLoad.north, 2.5, 0.6, 1.2);
-    const dWest = makeSeriesPath(GridState.gridLoad.west, 2.0, 0.4, 2.5);
-    const dEast = makeSeriesPath(GridState.gridLoad.east, 2.2, 0.5, 0.8);
+    const amp = unit === "A" ? 48 : unit === "kV" ? 1.5 : 6.2;
+    const totalData = makeSeriesPath(baseTotal, amp, 0.46, 0.2, 1.3);
+    const northData = makeSeriesPath(baseNorth, amp * 0.55, 0.52, 1.2, 1.1);
+    const westData = makeSeriesPath(baseWest, amp * 0.45, 0.42, 2.4, 1.4);
+    const eastData = makeSeriesPath(baseEast, amp * 0.4, 0.58, 0.9, 1.0);
 
-    if (totalLine) totalLine.setAttribute("d", dTotal);
-    if (totalArea) totalArea.setAttribute("d", dTotal + " V165 H0 Z");
-    if (northLine) northLine.setAttribute("d", dNorth);
-    if (westLine) westLine.setAttribute("d", dWest);
-    if (eastLine) eastLine.setAttribute("d", dEast);
+    if (totalLine) totalLine.setAttribute("d", totalData.d);
+    if (totalArea) totalArea.setAttribute("d", `${totalData.d} V${h} H0 Z`);
+    if (northLine) northLine.setAttribute("d", northData.d);
+    if (westLine) westLine.setAttribute("d", westData.d);
+    if (eastLine) eastLine.setAttribute("d", eastData.d);
+
+    if (tooltipVal) {
+      const activePt = totalData.pts[totalData.pts.length - 4] || totalData.pts[0];
+      if (isFault) {
+        tooltipVal.innerHTML = `<span style="color:#e84040;">${activePt.val.toFixed(1)} ${unit} ⚠ ANOMALY</span>`;
+      } else {
+        tooltipVal.textContent = `${activePt.val.toFixed(1)} ${unit}`;
+      }
+    }
   }
 
   // =========================================================================

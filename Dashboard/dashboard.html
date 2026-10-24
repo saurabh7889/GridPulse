@@ -687,31 +687,57 @@
                       <svg viewBox="0 0 24 24" width="14" height="14"><path d="M13 2L3 14h9l-1 8 10-12h-9z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       <span>Fault Mode</span>
                     </button>
+                    <button id="expandReportsChart" class="control-button expand-toggle" title="Expand Chart View">
+                      <svg viewBox="0 0 24 24" width="14" height="14"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span>Expand</span>
+                    </button>
                   </div>
                 </div>
                 <div class="chart-wrap">
-                  <div class="y-labels"><span>50</span><span>40</span><span>30</span><span>20</span><span>10</span><span>0</span></div>
+                  <div class="y-labels" id="reportsYLabels">
+                    <span>50 MW</span><span>40 MW</span><span>30 MW</span><span>20 MW</span><span>10 MW</span><span>0 MW</span>
+                  </div>
                   <div class="chart-plot" id="reportsChartPlot">
-                    <svg id="performanceChart" viewBox="0 0 820 166" preserveAspectRatio="none" role="img" aria-label="Grid performance line chart">
-                      <defs><linearGradient id="totalFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#202529" stop-opacity=".12"/><stop offset="1" stop-color="#202529" stop-opacity="0"/></linearGradient></defs>
-                      <g class="grid-lines"><path d="M0 0H820M0 33H820M0 66H820M0 99H820M0 132H820M0 165H820"/><path d="M0 0V165M117 0V165M234 0V165M351 0V165M468 0V165M585 0V165M702 0V165M819 0V165"/></g>
-                      <path id="totalArea" class="total-area" d="M0 98 L40 104 80 115 120 114 160 120 200 103 240 89 280 96 320 78 360 76 400 82 440 70 480 67 520 51 560 58 600 49 640 55 680 40 720 45 760 29 820 24V165H0Z"/>
-                      <path id="totalLine" class="series total-line" d="M0 98 L40 104 80 115 120 114 160 120 200 103 240 89 280 96 320 78 360 76 400 82 440 70 480 67 520 51 560 58 600 49 640 55 680 40 720 45 760 29 820 24"/>
-                      <path id="northLine" class="series north-line" d="M0 132 L40 136 80 133 120 145 160 135 200 139 240 128 280 137 320 118 360 112 400 120 440 105 480 100 520 92 560 101 600 105 640 92 680 79 720 85 760 74 820 65"/>
-                      <path id="westLine" class="series west-line" d="M0 155 L40 151 80 157 120 149 160 152 200 145 240 151 280 144 320 139 360 144 400 137 440 142 480 136 520 142 560 138 600 130 640 134 680 119 720 122 760 108 820 103"/>
-                      <path id="eastLine" class="series east-line" d="M0 147 L40 150 80 142 120 149 160 143 200 151 240 144 280 147 320 140 360 146 400 141 440 145 480 139 520 144 560 140 600 144 640 138 680 141 720 134 760 138 820 130"/>
-                      <line id="hoverLine" x1="560" y1="0" x2="560" y2="165"/><circle id="hoverDot" cx="560" cy="58" r="4.5"/>
+                    <svg id="performanceChart" viewBox="0 0 820 220" preserveAspectRatio="none" role="img" aria-label="Grid performance line chart">
+                      <defs>
+                        <linearGradient id="totalFill" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stop-color="#12181d" stop-opacity=".15"/>
+                          <stop offset="100%" stop-color="#12181d" stop-opacity="0"/>
+                        </linearGradient>
+                        <linearGradient id="faultFill" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stop-color="#e84040" stop-opacity=".22"/>
+                          <stop offset="100%" stop-color="#e84040" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <g class="grid-lines">
+                        <path d="M0 0H820 M0 44H820 M0 88H820 M0 132H820 M0 176H820 M0 220H820"/>
+                        <path d="M0 0V220 M136.6 0V220 M273.3 0V220 M410 0V220 M546.6 0V220 M683.3 0V220 M820 0V220"/>
+                      </g>
+                      <path id="totalArea" class="total-area" d=""/>
+                      <path id="totalLine" class="series total-line" d=""/>
+                      <path id="northLine" class="series north-line" d=""/>
+                      <path id="westLine" class="series west-line" d=""/>
+                      <path id="eastLine" class="series east-line" d=""/>
+                      <line id="hoverLine" x1="546.6" y1="0" x2="546.6" y2="220"/>
+                      <circle id="hoverDot" cx="546.6" cy="88" r="5"/>
                     </svg>
-                    <div class="chart-tooltip" id="chartTooltip"><span>May 18, 02:00 PM</span><strong><i></i><b id="reportsTooltipValue">42 MW</b></strong></div>
+                    <div class="chart-tooltip" id="chartTooltip"><span>Live Telemetry</span><strong><i></i><b id="reportsTooltipValue">42.4 MW</b></strong></div>
                     <div class="threshold-label" id="thresholdLabel" hidden>Threshold: 45 MW</div>
                   </div>
+                  <div class="x-labels" id="reportsXLabels">
+                    <span>Day 1</span><span>Day 2</span><span>Day 3</span><span>Day 4</span><span>Day 5</span><span>Day 6</span><span>Today</span>
+                  </div>
                 </div>
-                <div class="x-labels"><span>May 14</span><span>May 15</span><span>May 16</span><span>May 17</span><span>May 18</span><span>May 19</span><span>May 20</span></div>
-                <div class="chart-legend"><span><i class="legend-total"></i>Total Load</span><span><i class="legend-north"></i>North Feeder</span><span><i class="legend-west"></i>West Feeder</span><span><i class="legend-east"></i>East Feeder</span></div>
+                <div class="chart-legend">
+                  <span><i class="legend-total"></i>Total Load</span>
+                  <span><i class="legend-north"></i>North Feeder</span>
+                  <span><i class="legend-west"></i>West Feeder</span>
+                  <span><i class="legend-east"></i>East Feeder</span>
+                </div>
                 <!-- Fault Banner -->
                 <div class="fault-banner" id="faultBanner" hidden>
                   <svg viewBox="0 0 24 24" width="18" height="18"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                  <span><strong>FAULT DETECTED:</strong> Abnormal load spike on TX-04 Lakeside — Voltage deviation &gt;18%. Threshold exceeded at 08:42 AM.</span>
+                  <span><strong>FAULT DETECTED:</strong> Abnormal load surge on TX-04 Lakeside Substation — Voltage deviation &gt;18.4%. Threshold exceeded.</span>
                   <span class="fault-badge">3 Active Faults</span>
                 </div>
               </section>
@@ -1218,130 +1244,16 @@
       const workOrderDate = document.querySelector('#workOrderForm input[name="date"]');
       if (workOrderDate) workOrderDate.value = tomorrowISO;
 
-      /* =====================================================
-         CHART: Animated variable graph (ups & downs)
-         ===================================================== */
-      const svg = document.getElementById('performanceChart');
-
-      // Inject fault gradient defs
-      const defs = svg.querySelector('defs');
-      defs.innerHTML += `<linearGradient id="faultFill" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0%" stop-color="#e84040" stop-opacity=".18"/>
-        <stop offset="1" stop-color="#e84040" stop-opacity="0"/>
-      </linearGradient>`;
-
-      // Normal data points (y-values in SVG coords, 0=top 165=bottom)
-      const normalPoints = [98,104,115,114,120,103,89,96,78,76,82,70,67,51,58,49,55,40,45,29,24];
-      const normalNorth  = [132,136,133,145,135,139,128,137,118,112,120,105,100,92,101,105,92,79,85,74,65];
-      const normalWest   = [155,151,157,149,152,145,151,144,139,144,137,142,136,142,138,130,134,119,122,108,103];
-      const normalEast   = [147,150,142,149,143,151,144,147,140,146,141,145,139,144,140,144,138,141,134,138,130];
-
-      // Fault data — spikes, crashes, erratic
-      const faultPoints  = [98,88,130,60,145,72,30,120,148,40,160,25,145,10,155,18,142,8,150,5,160];
-      const faultNorth   = [132,120,155,80,160,85,45,140,158,55,162,35,155,18,160,22,152,10,158,8,162];
-      const faultWest    = [155,148,162,100,165,108,60,155,163,68,164,50,160,28,163,30,158,15,162,10,165];
-      const faultEast    = [147,140,158,92,163,98,52,150,161,60,163,42,157,22,161,25,155,12,160,8,163];
-
-      const xStep = 820 / (normalPoints.length - 1);
-
-      function buildPath(pts) {
-        return pts.map((y, i) => `${i === 0 ? 'M' : 'L'}${Math.round(i * xStep)} ${y}`).join(' ');
-      }
-      function buildArea(pts) {
-        return buildPath(pts) + `V165H0Z`;
-      }
-
-      // Add subtle random jitter for "live" feel
-      function jitter(pts, amount) {
-        return pts.map(y => Math.max(4, Math.min(162, y + (Math.random() - 0.5) * amount)));
-      }
-
-      let isFaultMode = false;
-      let animTimer = null;
-
-      function renderChart(pts, north, west, east, animated) {
-        const totalLine = document.getElementById('totalLine');
-        const totalArea = document.getElementById('totalArea');
-        const northLine = document.getElementById('northLine');
-        const westLine  = document.getElementById('westLine');
-        const eastLine  = document.getElementById('eastLine');
-        const j = animated ? jitter(pts, isFaultMode ? 18 : 6) : pts;
-        if (totalLine) totalLine.setAttribute('d', buildPath(j));
-        if (totalArea) totalArea.setAttribute('d', buildArea(j));
-        if (northLine) northLine.setAttribute('d', buildPath(animated ? jitter(north, isFaultMode ? 14 : 4) : north));
-        if (westLine)  westLine.setAttribute('d',  buildPath(animated ? jitter(west,  isFaultMode ? 14 : 4) : west));
-        if (eastLine)  eastLine.setAttribute('d',  buildPath(animated ? jitter(east,  isFaultMode ? 12 : 4) : east));
-      }
-
-      function startAnimation() {
-        if (animTimer) clearInterval(animTimer);
-        animTimer = setInterval(() => {
-          const pts   = isFaultMode ? faultPoints : normalPoints;
-          const north = isFaultMode ? faultNorth  : normalNorth;
-          const west  = isFaultMode ? faultWest   : normalWest;
-          const east  = isFaultMode ? faultEast   : normalEast;
-          renderChart(pts, north, west, east, true);
-        }, 1800);
-      }
-
-      // Draw initial normal chart
-      renderChart(normalPoints, normalNorth, normalWest, normalEast, false);
-      startAnimation();
-
-      /* =====================================================
-         FAULT MODE TOGGLE
-         ===================================================== */
-      const faultBtn   = document.getElementById('faultModeBtn');
-      const faultBanner = document.getElementById('faultBanner');
-      const chartPanel = document.querySelector('.chart-panel');
-
-      // Store original report rows HTML
-      const reportsBody = document.getElementById('reportsBody');
-      const originalRows = reportsBody ? reportsBody.innerHTML : '';
-
-      const faultyRowsHTML = `
-        <tr class="fault-row" data-report="TX-04 Voltage Spike Report" data-type="ALERT" data-range="Today" data-generated="Today">
-          <td>TX-04 Voltage Spike Report</td><td>ALERT</td><td>Today</td><td>Today</td>
-          <td><span class="fault-status-pill">⚠ Fault</span></td>
-          <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
-        </tr>
-        <tr class="fault-row" data-report="North Feeder Overload" data-type="ALERT" data-range="Today" data-generated="Today">
-          <td>North Feeder Overload</td><td>ALERT</td><td>Today</td><td>Today</td>
-          <td><span class="fault-status-pill">⚠ Critical</span></td>
-          <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
-        </tr>
-        <tr class="fault-row" data-report="Transformer TX-07 Thermal Trip" data-type="ALERT" data-range="Today" data-generated="Today">
-          <td>Transformer TX-07 Thermal Trip</td><td>ALERT</td><td>Today</td><td>Today</td>
-          <td><span class="fault-status-pill">⚠ Fault</span></td>
-          <td><button class="download-icon" aria-label="Download"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></svg></button><button class="report-more" aria-label="More">•••</button></td>
-        </tr>`;
-
-      if (faultBtn) {
-        faultBtn.addEventListener('click', () => {
-          isFaultMode = !isFaultMode;
-          faultBtn.classList.toggle('active', isFaultMode);
-          faultBtn.setAttribute('aria-pressed', String(isFaultMode));
-          faultBtn.querySelector('span').textContent = isFaultMode ? 'Normal Mode' : 'Fault Mode';
-
-          // Show/hide banner
-          if (faultBanner) faultBanner.hidden = !isFaultMode;
-
-          // Toggle chart panel class
-          if (chartPanel) chartPanel.classList.toggle('fault-mode', isFaultMode);
-
-          // Switch table rows
-          if (reportsBody) reportsBody.innerHTML = isFaultMode ? faultyRowsHTML : originalRows;
-
-          // Immediately redraw chart to new mode
-          renderChart(
-            isFaultMode ? faultPoints : normalPoints,
-            isFaultMode ? faultNorth  : normalNorth,
-            isFaultMode ? faultWest   : normalWest,
-            isFaultMode ? faultEast   : normalEast,
-            false
-          );
-          startAnimation();
-        });
+      // 5. Fill Reports chart X-axis labels with the last 7 days ending today
+      const xLabelsContainer = document.getElementById('reportsXLabels');
+      if (xLabelsContainer) {
+        const dayFormat = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+        const labelsHTML = [];
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(now.getTime() - i * 86400000);
+          labelsHTML.push(`<span>${dayFormat.format(d)}</span>`);
+        }
+        xLabelsContainer.innerHTML = labelsHTML.join('');
       }
     });
   </script>

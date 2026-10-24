@@ -3823,12 +3823,30 @@ tbody tr.critical-row {
 
 .chart-panel {
   margin-top: 18px;
-  padding: 18px 20px;
+  padding: 20px 22px;
+  transition: all 0.25s ease;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chart-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #11171c;
+  margin: 0;
 }
 
 .chart-controls {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -3843,72 +3861,143 @@ tbody tr.critical-row {
   font-weight: 550;
   color: #242b32;
   outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.chart-controls select:hover,
+.control-button:hover {
+  border-color: #078c7b;
 }
 
 .control-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .control-button svg {
-  width: 16px;
-  height: 16px;
-  stroke: #18222a;
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
   stroke-width: 1.8;
   fill: none;
+  flex-shrink: 0;
 }
 
+.expand-toggle.active {
+  background: #11171c !important;
+  color: #fff !important;
+  border-color: #11171c !important;
+}
+
+/* --- Perfect 2-column chart grid for Y-labels, SVG Plot, and X-labels --- */
 .chart-wrap {
   display: grid;
-  grid-template-columns: 28px minmax(0, 1fr);
-  gap: 10px;
-  margin-top: 20px;
+  grid-template-columns: 56px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 8px;
+  margin-top: 18px;
+  align-items: stretch;
 }
 
 #reportsChartPlot {
+  grid-column: 2;
+  grid-row: 1;
   position: relative;
-  height: 166px;
+  height: 250px;
   min-width: 0;
+  background: rgba(246, 248, 250, 0.65);
+  border: 1px solid rgba(224, 229, 234, 0.85);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  padding: 2px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 #reportsChartPlot svg {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .grid-lines {
   fill: none;
-  stroke: #eaedef;
+  stroke: #e3e7eb;
   stroke-width: 1;
 }
 
 .total-area {
   fill: url(#totalFill);
+  transition: d 0.35s ease;
 }
 
 .series {
   fill: none;
-  stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: d 0.35s ease;
 }
 
-.total-line { stroke: #181c1f; stroke-width: 2.4; }
-.north-line { stroke: #8e959e; }
-.west-line { stroke: #5bc8b4; }
-.east-line { stroke: #c8cdd1; }
+.total-line {
+  stroke: #12181d;
+  stroke-width: 2.8;
+  filter: drop-shadow(0 2px 4px rgba(18, 24, 29, 0.18));
+}
+.north-line {
+  stroke: #6c7582;
+  stroke-width: 2;
+}
+.west-line {
+  stroke: #078c7b;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 2px 4px rgba(7, 140, 123, 0.22));
+}
+.east-line {
+  stroke: #9ea8b3;
+  stroke-width: 1.8;
+}
 
 #hoverLine {
-  stroke: #6c737b;
+  stroke: #5a626c;
   stroke-dasharray: 4 4;
-  stroke-width: 1;
+  stroke-width: 1.2;
 }
 
 #hoverDot {
-  fill: #111;
+  fill: #078c7b;
   stroke: #fff;
   stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px rgba(7, 140, 123, 0.5));
+}
+
+.y-labels {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 250px;
+  color: #727a87;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: right;
+  padding: 2px 6px 2px 0;
+  user-select: none;
+}
+
+.x-labels {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  justify-content: space-between;
+  color: #727a87;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 6px 0;
+  user-select: none;
+  margin: 0;
 }
 
 .chart-legend {
@@ -3917,8 +4006,10 @@ tbody tr.critical-row {
   justify-content: center;
   gap: 24px;
   margin-top: 16px;
-  color: #7a828c;
-  font-size: 11px;
+  color: #636c77;
+  font-size: 11.5px;
+  font-weight: 550;
+  flex-wrap: wrap;
 }
 
 .chart-legend span {
@@ -3933,10 +4024,16 @@ tbody tr.critical-row {
   border-radius: 50%;
 }
 
-.legend-total { background: #181c1f; }
-.legend-north { background: #8e959e; }
-.legend-west { background: #5bc8b4; }
-.legend-east { background: #c8cdd1; }
+.legend-total { background: #12181d; }
+.legend-north { background: #6c7582; }
+.legend-west { background: #078c7b; }
+.legend-east { background: #9ea8b3; }
+
+/* Expanded Mode */
+.chart-panel.expanded #reportsChartPlot,
+.chart-panel.expanded .y-labels {
+  height: 380px;
+}
 
 /* ---- Fault Mode Toggle Button ---- */
 .fault-toggle {
@@ -5329,9 +5426,20 @@ tbody tr.critical-row {
   #asset-health .workspace,
   #alerts .workspace,
   #reroute .workspace,
-  #maintenance .workspace,
-  #reports .workspace {
+  #maintenance .workspace {
     grid-template-columns: minmax(0, 1fr) 350px;
+  }
+  #reports .workspace {
+    grid-template-columns: minmax(0, 1fr) 380px;
+  }
+}
+
+@media (max-width: 1280px) {
+  #reports .workspace {
+    grid-template-columns: 1fr !important;
+  }
+  .chart-wrap {
+    column-gap: 10px;
   }
 }
 
