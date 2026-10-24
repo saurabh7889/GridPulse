@@ -68,7 +68,7 @@
         <div class="topbar-right">
           <button class="date-button" id="dateButton">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3"/></svg>
-            <span>May 20, 2024</span>
+            <span id="topbarDate">May 20, 2024</span>
             <span class="chevron">⌄</span>
           </button>
           <button class="notification-button" id="notificationButton" aria-label="Notifications">
@@ -626,7 +626,7 @@
 
               <section class="bottom-cards">
                 <article class="bottom-card team-card"><h2>Dispatch team</h2><div class="team-content"><div class="avatars"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="Engineer"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=80&q=80" alt="Engineer"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Engineer"><button id="addEngineer" aria-label="Add engineer">＋</button></div><p>3 engineers assigned<small>Available for dispatch</small></p></div></article>
-                <article class="bottom-card"><h2>Schedule</h2><button class="bottom-link" id="scheduleButton"><span class="bottom-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><span><strong>May 21, 2024</strong><small>Planned maintenance window</small></span><b>›</b></button></article>
+                <article class="bottom-card"><h2>Schedule</h2><button class="bottom-link" id="scheduleButton"><span class="bottom-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></span><span><strong id="scheduleCardDate">May 21, 2024</strong><small>Planned maintenance window</small></span><b>›</b></button></article>
                 <article class="bottom-card"><h2>Location</h2><button class="bottom-link" id="locationButton"><span class="bottom-icon"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><strong>Lakeside Substation</strong><small>12 km from central depot</small></span><b>›</b></button></article>
               </section>
             </div>
@@ -681,7 +681,7 @@
                   <h2>Grid performance overview</h2>
                   <div class="chart-controls">
                     <select id="reportsLocationSelect" aria-label="Location"><option>All Locations</option><option>Lakeside Region</option><option>North Substation</option><option>West Feeder</option></select>
-                    <button id="dateRange" class="control-button"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>May 14, 2024 – May 20, 2024 <span>⌄</span></button>
+                    <button id="dateRange" class="control-button"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span id="dateRangeText">May 14, 2024 – May 20, 2024</span> <span>⌄</span></button>
                     <select id="metricSelect" aria-label="Performance metric"><option value="Load (MW)">Load (MW)</option><option value="Voltage (kV)">Voltage (kV)</option><option value="Current (A)">Current (A)</option></select>
                   </div>
                 </div>
@@ -1173,6 +1173,42 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </div>
 
+  <script>
+    // Set all default dates to today's real-time date on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const now = new Date();
+
+      // Formatter: "Oct 24, 2026"
+      const fmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      // Formatter: "Oct 14, 2026" (7 days ago for range start)
+      const fmtRange = (d) => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(d);
+
+      const todayStr    = fmt.format(now);
+      const tomorrowStr = fmtRange(new Date(now.getTime() + 86400000));
+      const weekAgoStr  = fmtRange(new Date(now.getTime() - 6 * 86400000));
+
+      // YYYY-MM-DD for <input type="date">
+      const pad = (n) => String(n).padStart(2, '0');
+      const todayISO = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+      const tomorrowISO = (() => { const t = new Date(now.getTime() + 86400000); return `${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`; })();
+
+      // 1. Topbar date button
+      const topbarDate = document.getElementById('topbarDate');
+      if (topbarDate) topbarDate.textContent = todayStr;
+
+      // 2. Date range button in analytics chart
+      const dateRangeText = document.getElementById('dateRangeText');
+      if (dateRangeText) dateRangeText.textContent = `${weekAgoStr} - ${todayStr}`;
+
+      // 3. Schedule card date
+      const scheduleCardDate = document.getElementById('scheduleCardDate');
+      if (scheduleCardDate) scheduleCardDate.textContent = tomorrowStr;
+
+      // 4. Work order dialog scheduled date input
+      const workOrderDate = document.querySelector('#workOrderForm input[name="date"]');
+      if (workOrderDate) workOrderDate.value = tomorrowISO;
+    });
+  </script>
   <script src="dash.js"></script>
 </body>
 </html>
